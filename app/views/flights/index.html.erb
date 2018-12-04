@@ -1,0 +1,43 @@
+<h1 class="title">FLIGHTS</h1> 
+<br>
+<div class="schlag">
+<%= form_tag(root_path, method: :get) do %>
+<%=select_tag "departure_airport", options_from_collection_for_select(@airports, "city", "city")%>
+<br>
+<%=select_tag "arrival_airport", options_from_collection_for_select(@airports, "city", "city")%>
+<%= text_field_tag :departure_date %>
+<%= submit_tag 'Search', name: nil %>
+<% end %>
+
+<br>
+
+</div>
+
+
+
+<% if @flight%>
+<div class="card-columns">
+    <% @flight.each do |f| %>
+    <div class='card'>
+        <div class="card-body">
+            <h5 class="card-title">
+                Départ : <%= f["departure_airport"] %>
+            </h5>
+            <h5 class="card-title">
+                Arrivée: <%= f["arrival_airport"] %>
+            </h5>
+            <h5 class="card-title">
+        N° du vol:
+        <%= f["id"] %>
+            </h5>
+            <h6 class="card-subtitle text-muted">
+                <%= f["departure_date"] %>
+            </h6>
+            <a href="/bookings/new/<%=f['id']%>/">Booke ton vol</a>
+        </div>
+    </div>
+    <% end %>
+</div>
+<% else %>
+<p>Aucun résultat</p>
+<% end %>

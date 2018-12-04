@@ -1,0 +1,25 @@
+<h1>The Flight <%= @flight.id %> </h1>
+
+<p>
+Le vol
+<%= @flight.id %> départ : <%= @flight.departure_airport.city %>
+<br>
+<%= form_tag({:url => "bookings/new/#{@flight.id}"}, {:method => :get}) do %>
+<%= text_field_tag :passenger_number %>
+<%= submit_tag 'Search', name: nil %>
+<% end %>
+</p>
+
+<% if @passenger_number%>
+
+    <%= form_for @booking, url: {action: 'create'} do |f| %>
+    <% @passenger_number.to_i.times do %>
+            <%= f.text_field :passenger_name %>
+            <br>
+            <% end %>
+        <%= f.submit %>
+    <% end %>
+
+<% else %>
+<p>Veuillez saisir un nombre de passagers</p>
+<% end %>
